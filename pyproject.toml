@@ -1,0 +1,24 @@
+[project]
+name = "voice-scraper-v2"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ddgs>=9.14.4",
+    "dotenv>=0.9.9",
+    "ffmpeg-python>=0.2.0",
+    "mlx-whisper>=0.4.3",
+    "omegaconf>=2.3.1",
+    "pyannote-audio>=4.0.4",
+    "pydantic>=2.13.4",
+    "rich-argparse>=1.8.0",
+    "yt-dlp>=2026.6.9",
+]
+
+[build-system]
+requires = ["setuptools>=61.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+voice-scraper = "voice_scraper.cli:main"
