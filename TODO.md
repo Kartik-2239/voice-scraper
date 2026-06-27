@@ -1,3 +1,0 @@
-- [ ] make the limiter such that it checks more if the limit of videos isn't reached
-- [ ] better error handling
-- [ ] improve code
