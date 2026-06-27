@@ -16,8 +16,8 @@ It then downloads those clips and performs diarization to identify speakers and 
 
 ## Samples
 
-[Tony Stark](assets/tony_stark.wav)
-[Violet Evergarden](assets/violet_evergarden.wav)
+- [Tony Stark](assets/tony_stark.wav)
+- [Violet Evergarden](assets/violet_evergarden.wav)
 
 ## Requirements
 
