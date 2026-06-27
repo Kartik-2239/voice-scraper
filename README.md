@@ -1,7 +1,7 @@
 # Voice Scraper
 
-Voice scraper is a project i made for scraping audio of specific characters from youtube.
-It works by searching with duck duck go or yt-dlp search and finds character clips using query and keywords provided.
+Voice Scraper is a project I made for scraping audio of specific characters from YouTube.
+It works by searching with DuckDuckGo or yt-dlp search and finds character clips using queries and provided keywords.
 It then downloads those clips and performs diarization to identify speakers and combine the audios.
 
 ## How it works
@@ -12,7 +12,7 @@ It then downloads those clips and performs diarization to identify speakers and 
 - Segmentation — Splits each clip into per-speaker segments
 - Speaker identification — If a sample voice is provided, matches segments to the target speaker by voice embedding similarity; otherwise picks the most frequent speaker
 - Join — Merges all matched segments into a single _joined.wav file
-- Final check — Re-runs diarization on the joined file; if multiple speakers are still present, segments again and returns only the target speaker's clips
+- Final check — Re-runs diarization on the joined file; if multiple speakers are still present, segments it again and returns only the target speaker's clips
 
 ## Samples
 
@@ -37,7 +37,7 @@ uv sync
 copy .env.local to .env
 
 ```bash
-# Hugging face token for accessing gated models
+# Hugging Face token for accessing gated models
 export HUGGINGFACE_TOKEN=hf_....
 export EMBEDDING_MODEL=pyannote/wespeaker-voxceleb-resnet34-LM
 export DIARIZATION_MODEL=pyannote/speaker-diarization-community-1
@@ -45,18 +45,18 @@ export DIARIZATION_MODEL=pyannote/speaker-diarization-community-1
 # Use CUDA if you have an nvidia gpu
 export DEVICE=CPU
 
-# Usage Config (can be overrided by cli arguments)
+# Usage Config (can be overridden by cli arguments)
 export USE_YT_SEARCH=False
 export OUTPUT_DIR=./downloads
 
-# Number of reattempts if search result fails to get the specified number of search results
+# Number of re-attempts if search result fails to get the specified number of search results
 export MAX_TRIES=3
 ```
 
 
 ## CLI Arguments
 
-| Argument | Defailt | Description |
+| Argument | Default | Description |
 |---|---|---|
 | `-c`, `--character` | none | Character/speaker name (required) |
 | `-q`, `--query` | none | Search query terms (default: `talking speaking podcast`) |
@@ -88,20 +88,20 @@ uv run voice-scraper -c "Frieren" -q dub english voice -l 5 --max-duration 5:00
 ## Key Points (for better quality and speed)
 
 ### 1. When sample voice isn't given
-In the use case where sample voice is not provided the program checks patterns and mathed among the clips to figure out the common speaker and makes a joined clip of those.
-Since this is not completely reliable there is on final step of diarization to check if there are multiple speakers in the joined clip.
+In the use case where sample voice is not provided the program checks patterns and matches among the clips to figure out the common speaker and makes a joined clip of those.
+Since this is not completely reliable there is one final step of diarization to check if there are multiple speakers in the joined clip.
 
-### 2. Using sample voice with
+### 2. Using sample voice with --sample-voice
 If sample voice is provided the tool will use it as the ground truth and compare all voices with it in order to create the final joined clip.
 ```bash
 uv run voice-scraper -c "Frieren" -q dub english --sample-voice path/to/sample.wav
 ```
-Make sure the sample path is a .wav file, if it isn't run the following command before
+Make sure the sample path is a .wav file, if it isn't, run the following command first
 ```bash
 ffmpeg -i path/to/sample_with_any_ext path/to/sample.wav
 ```
 ### 3. Using `--skip-finalcheck` with sample voice
-Skip finalcheck flag skips the final diarization which is used to identify multiple users in the joined clip.
+The --skip-finalcheck flag skips the final diarization which is used to identify multiple speakers in the joined clip.
 This is useful when no sample voice is given as the program would have to see patterns to figure out which speaker in each clip is the required one.
 ```bash
 # Since sample voice is used
@@ -111,7 +111,7 @@ uv run voice-scraper -c "Frieren" -q dub english --sample-voice path/to/sample.w
 
 ## Limitations
 
-- The tool is no where near 100% accurate, it is still mostly just guessing with a small local model and struggles when the back and forth conversations are fast.
-- The quality can be improved a lot my some llm that supports multi modal input. So maybe i will add that support in the future but for now it is completely local.
+- The tool is nowhere near 100% accurate, it is still mostly just guessing with a small local model and struggles when the back and forth conversations are fast.
+- The quality can be improved a lot by some LLM that supports multi modal input. So maybe I will add that support in the future but for now it is completely local.
 - The search can sometimes fail due to the combination of queries and duration.
-- yt-dlp can fail for some youtube videos due to various reasons, adding cookies might fix those errors.
+- yt-dlp can fail for some YouTube videos due to various reasons, adding cookies might fix those errors.
